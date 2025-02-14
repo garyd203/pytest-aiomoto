@@ -1,15 +1,17 @@
 [tool.poetry]
 name = "pytest-aiomoto"
-version = "0.7.1"
+version = "0.8.0"
 description = "pytest-aiomoto"
 authors = [
     "Darren Weber <dazza-codes@github.com>",
+    "Huon Wilson <hwilson@exoflare.io>",
+    "Gary Donovan <gdonovan@exoflare.io>",
 ]
 license = "Apache-2.0"
 
 readme = "README.md"
-repository = "https://github.com/dazza-codes/pytest-aiomoto.git"
-homepage = "https://github.com/dazza-codes/pytest-aiomoto"
+repository = "https://github.com/garyd203/pytest-aiomoto.git"
+homepage = "https://github.com/garyd203/pytest-aiomoto"
 
 keywords = [
     "Development Status :: 3 - Alpha",
