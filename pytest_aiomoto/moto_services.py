@@ -43,7 +43,7 @@ def moto_service_reset(service_name: str):
 
 def moto_service_app(service_name: str):
     app = moto.server.DomainDispatcherApplication(
-        moto.server.create_backend_app, service=service_name
+        moto.server.create_backend_app
     )
     app.debug = True
     return app
