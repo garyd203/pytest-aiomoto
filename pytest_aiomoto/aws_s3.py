@@ -34,7 +34,7 @@ from typing import List
 import botocore.waiter
 import pytest
 from botocore.exceptions import ClientError
-from moto import mock_s3
+from moto import mock_aws
 
 from pytest_aiomoto.s3_object import S3Object
 from pytest_aiomoto.utils import assert_status_code
@@ -222,7 +222,7 @@ def s3_bucket(s3_bucket_name, aws_s3_client, aws_region) -> str:
     fixture, where the moto-bucket is cleaned up on exit.
     :return: the s3_bucket_name
     """
-    with mock_s3():
+    with mock_aws():
         create_s3_bucket(s3_bucket_name, aws_s3_client, aws_region)
         yield s3_bucket_name
         delete_s3_bucket(s3_bucket_name, aws_s3_client)
@@ -235,7 +235,7 @@ def s3_bucket_resource(s3_bucket_name, aws_s3_resource, aws_region) -> "s3.Bucke
     fixture, where the moto-bucket is cleaned up on exit.
     :return: the s3.Bucket resource
     """
-    with mock_s3():
+    with mock_aws():
         bucket = create_s3_bucket_resource(s3_bucket_name, aws_s3_resource, aws_region)
         yield bucket
         delete_s3_bucket_resource(s3_bucket_name, aws_s3_resource)
@@ -249,7 +249,7 @@ def s3_buckets(s3_bucket_name, aws_s3_client, aws_region) -> List[str]:
     moto-buckets are cleaned up on exit.
     :return: a list of bucket names
     """
-    with mock_s3():
+    with mock_aws():
         bucket_names = []
         for i in range(10):
             bucket_name = f"{s3_bucket_name}-{i:02d}"
@@ -319,7 +319,7 @@ def s3_uri_object(
     the s3_uri_str fixture, where the moto-bucket is cleaned up on exit.
     :return: an S3Object(bucket=s3_bucket_name, key=s3_key)
     """
-    with mock_s3():
+    with mock_aws():
         create_s3_bucket(s3_bucket_name, aws_s3_client, aws_region)
         create_s3_object(
             s3_bucket_name, s3_key, s3_object_text, aws_s3_resource, aws_s3_client
@@ -359,7 +359,7 @@ def s3_temp_objects(
     This creates 10 files, 5 with .txt and 5 with .tif file extensions,
     below the s3://s3_bucket/s3_temp_dir path
     """
-    # Since a mock_s3 context is created by the s3_bucket
+    # Since a mock_aws context is created by the s3_bucket
     # and aws_s3_client fixtures, it is not required here.
 
     file_key = f"{s3_temp_dir}/{s3_uuid}.txt"
@@ -410,7 +410,7 @@ def s3_temp_1000s_objects(
     below the s3://s3_bucket/s3_temp_dir path; the default page limit for s3
     object listings is usually 1000, so this should exceed 1 page.
     """
-    # Since a mock_s3 context is created by the s3_bucket
+    # Since a mock_aws context is created by the s3_bucket
     # and aws_s3_client fixtures, it is not required here.
     file_key = f"{s3_temp_dir}/{s3_uuid}.txt"
     s3_file = create_s3_object(
